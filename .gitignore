@@ -12,6 +12,8 @@
 /frontend/out/
 /frontend/.env.local
 
+.env
+
 # Docker
 /docker/php/*.log
 
