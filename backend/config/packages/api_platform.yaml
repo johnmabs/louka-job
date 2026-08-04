@@ -9,3 +9,6 @@ api_platform:
     exception_to_status:
         App\IdentityAccess\Domain\Exception\EmailAlreadyUsedException: 409
         App\Shared\Domain\Exception\InvalidEmailException: 400
+        App\IdentityAccess\Domain\Exception\InvalidVerificationTokenException: 400
+        App\IdentityAccess\Domain\Exception\UserNotFoundException: 404
+        App\IdentityAccess\Domain\Exception\EmailAlreadyVerifiedException: 409

@@ -21,6 +21,10 @@ services:
 
     App\IdentityAccess\Domain\Repository\UserRepositoryInterface: '@App\IdentityAccess\Infrastructure\Doctrine\DoctrineUserRepository'
     App\IdentityAccess\Domain\Security\PasswordHasherInterface: '@App\IdentityAccess\Infrastructure\Security\SymfonyPasswordHasher'
+    App\IdentityAccess\Infrastructure\Security\HmacEmailVerificationTokenizer:
+        arguments:
+            $secret: "%env(EMAIL_VERIFICATION_SECRET)%"
+    App\IdentityAccess\Domain\Security\EmailVerificationTokenizerInterface: '@App\IdentityAccess\Infrastructure\Security\HmacEmailVerificationTokenizer'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

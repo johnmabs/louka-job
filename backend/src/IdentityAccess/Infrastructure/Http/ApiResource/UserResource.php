@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
 use App\IdentityAccess\Infrastructure\Http\Processor\RegisterUserProcessor;
+use App\IdentityAccess\Infrastructure\Http\Processor\VerifyEmailProcessor;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -21,6 +22,13 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Post(
             uriTemplate: '/users',
             processor: RegisterUserProcessor::class,
+        ),
+        new Post(
+            uriTemplate: '/users/{id}/verify_email',
+            uriVariables: ['id'],
+            status: 200,
+            input: VerifyEmailInput::class,
+            processor: VerifyEmailProcessor::class,
         ),
     ],
 )]

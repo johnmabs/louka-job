@@ -6,6 +6,7 @@ namespace App\IdentityAccess\Domain\Model;
 
 use App\Shared\Domain\ValueObject\Email;
 use App\IdentityAccess\Domain\ValueObject\UserId;
+use App\IdentityAccess\Domain\Exception\EmailAlreadyVerifiedException;
 
 /**
  * Racine d'agrégat (Aggregate Root) du Bounded Context Identity & Access.
@@ -76,7 +77,7 @@ final class User
     public function verifyEmail(\DateTimeImmutable $now): void
     {
         if ($this->status !== UserStatus::PendingVerification) {
-            throw new \DomainException('Seul un compte en attente de vérification peut être confirmé.');
+            throw new EmailAlreadyVerifiedException('Ce compte est déjà vérifié ou dans un état incompatible.');
         }
 
         $this->status = UserStatus::Active;
