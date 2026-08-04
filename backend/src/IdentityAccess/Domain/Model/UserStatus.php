@@ -6,7 +6,7 @@ namespace App\IdentityAccess\Domain\Model;
 
 enum UserStatus: string
 {
-    case PendingVerification = 'pending_verification';
+    case PendingVerification = 'pending';
     case Active = 'active';
     case Suspended = 'suspended';
     case Deleted = 'deleted';
