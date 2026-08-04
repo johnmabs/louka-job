@@ -25,6 +25,8 @@ services:
         arguments:
             $secret: "%env(EMAIL_VERIFICATION_SECRET)%"
     App\IdentityAccess\Domain\Security\EmailVerificationTokenizerInterface: '@App\IdentityAccess\Infrastructure\Security\HmacEmailVerificationTokenizer'
-
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\IdentityAccess\Domain\Notification\EmailVerificationNotifierInterface: '@App\IdentityAccess\Infrastructure\Notification\MailerEmailVerificationNotifier'
+    App\IdentityAccess\Infrastructure\Notification\MailerEmailVerificationNotifier:
+        arguments:
+            $frontendUrl: "%env(FRONTEND_URL)%"
+            $senderAddress: "%env(MAILER_SENDER_ADDRESS)%"
