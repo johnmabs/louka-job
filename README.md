@@ -107,12 +107,13 @@ couplage contraire au principe des Bounded Contexts, cahier des charges §3.1.3)
 - [x] Structure du module (`Domain` / `Application` / `Infrastructure`)
 - [x] Shared Kernel (`Uuid`, `Email`) + identité locale `UserId`
 - [x] Entité de domaine `User` (agrégat pur, factories `register()` / `reconstitute()`)
-- [ ] Mapping Doctrine XML + Custom Type `UserIdType`
-- [ ] Migration + première table `identity_access_user`
-- [ ] Repository (`UserRepositoryInterface` + implémentation Doctrine)
-- [ ] Inscription + hash Argon2id (Application layer)
-- [ ] Exposition API Platform (Resource + Processor, séparés de l'entité)
-- [ ] JWT RS256 (access token + refresh token rotatif)
+- [x] Mapping Doctrine XML + Custom Types (`UserIdType`, `EmailType`)
+- [x] Migration + table `identity_access_user`
+- [x] Repository (`UserRepositoryInterface` + implémentation Doctrine)
+- [x] Inscription + hash Argon2id (Application + API Platform)
+- [x] Vérification d'email (token HMAC signé, 24h, usage unique)
+- [ ] Envoi réel de l'email de vérification (Mailer/Notifier → Mailpit)
+- [ ] Connexion + JWT RS256 (access token + refresh token rotatif)
 - [ ] RBAC hiérarchique (`ROLE_CANDIDATE`, `ROLE_RECRUITER`, `ROLE_COMPANY_ADMIN`, `ROLE_PLATFORM_ADMIN`)
 - [ ] MFA/TOTP
 
