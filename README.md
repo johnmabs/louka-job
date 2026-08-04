@@ -112,7 +112,7 @@ couplage contraire au principe des Bounded Contexts, cahier des charges §3.1.3)
 - [x] Repository (`UserRepositoryInterface` + implémentation Doctrine)
 - [x] Inscription + hash Argon2id (Application + API Platform)
 - [x] Vérification d'email (token HMAC signé, 24h, usage unique)
-- [ ] Envoi réel de l'email de vérification (Mailer/Notifier → Mailpit)
+- [x] Envoi réel de l'email de vérification (Mailer/Notifier → Mailpit)
 - [ ] Connexion + JWT RS256 (access token + refresh token rotatif)
 - [ ] RBAC hiérarchique (`ROLE_CANDIDATE`, `ROLE_RECRUITER`, `ROLE_COMPANY_ADMIN`, `ROLE_PLATFORM_ADMIN`)
 - [ ] MFA/TOTP
