@@ -3,6 +3,7 @@ doctrine:
         url: "%env(resolve:DATABASE_URL)%"
         types:
             user_id: App\IdentityAccess\Infrastructure\Doctrine\Type\UserIdType
+            email: App\Shared\Infrastructure\Doctrine\Type\EmailType
 
         profiling_collect_backtrace: "%kernel.debug%"
     orm:
@@ -12,6 +13,12 @@ doctrine:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
         auto_mapping: true
         mappings:
+            IdentityAccess:
+                type: xml
+                is_bundle: false
+                dir: "%kernel.project_dir%/src/IdentityAccess/Infrastructure/Doctrine/mapping"
+                prefix: 'App\IdentityAccess\Domain\Model'
+                alias: IdentityAccess
 
 when@test:
     doctrine:

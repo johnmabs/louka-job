@@ -1,8 +1,11 @@
 api_platform:
-    title: Hireflow
+    title: Teka
     version: 1.0.0
     show_webby: false
     defaults:
         stateless: true
         cache_headers:
             vary: ["Content-Type", "Authorization", "Origin"]
+    exception_to_status:
+        App\IdentityAccess\Domain\Exception\EmailAlreadyUsedException: 409
+        App\Shared\Domain\Exception\InvalidEmailException: 400
