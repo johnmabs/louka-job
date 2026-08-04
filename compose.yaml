@@ -1,5 +1,4 @@
 services:
-
   traefik:
     image: traefik:v3.7
     command:
@@ -49,6 +48,8 @@ services:
     build: ./docker/php
     volumes:
       - ./backend:/var/www/html
+    environment:
+      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?serverVersion=18&charset=utf8"
     depends_on:
       postgres:
         condition: service_healthy
