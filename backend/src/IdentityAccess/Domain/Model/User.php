@@ -20,6 +20,7 @@ final class User
     private string $passwordHash;
     private UserStatus $status;
     private \DateTimeImmutable $createdAt;
+    private ?\DateTimeImmutable $emailVerifiedAt;
 
     private function __construct(
         UserId $id,
@@ -27,12 +28,14 @@ final class User
         string $passwordHash,
         UserStatus $status,
         \DateTimeImmutable $createdAt,
+        ?\DateTimeImmutable $emailVerifiedAt,
     ) {
         $this->id = $id;
         $this->email = $email;
         $this->passwordHash = $passwordHash;
         $this->status = $status;
         $this->createdAt = $createdAt;
+        $this->emailVerifiedAt = $emailVerifiedAt;
     }
 
     /**
@@ -47,6 +50,7 @@ final class User
             passwordHash: $passwordHash,
             status: UserStatus::PendingVerification,
             createdAt: new \DateTimeImmutable(),
+            emailVerifiedAt: null,
         );
     }
 
@@ -59,17 +63,24 @@ final class User
         string $passwordHash,
         UserStatus $status,
         \DateTimeImmutable $createdAt,
+        ?\DateTimeImmutable $emailVerifiedAt,
     ): self {
-        return new self($id, $email, $passwordHash, $status, $createdAt);
+        return new self($id, $email, $passwordHash, $status, $createdAt, $emailVerifiedAt);
     }
 
-    public function activate(): void
+    /**
+     * Confirme l'email suite au clic sur le lien signé reçu par le candidat.
+     * Idempotent en pratique : rejouer un lien déjà utilisé échoue ici,
+     * car le statut n'est plus PendingVerification.
+     */
+    public function verifyEmail(\DateTimeImmutable $now): void
     {
         if ($this->status !== UserStatus::PendingVerification) {
-            throw new \DomainException('Seul un compte en attente de vérification peut être activé.');
+            throw new \DomainException('Seul un compte en attente de vérification peut être confirmé.');
         }
 
         $this->status = UserStatus::Active;
+        $this->emailVerifiedAt = $now;
     }
 
     public function id(): UserId
@@ -95,5 +106,10 @@ final class User
     public function createdAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    public function emailVerifiedAt(): ?\DateTimeImmutable
+    {
+        return $this->emailVerifiedAt;
     }
 }
