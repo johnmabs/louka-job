@@ -62,12 +62,31 @@ docker compose logs -f <service>
 ```
 hireflow/
 ├── backend/ # Symfony 8 (API + futur back-office Symfony UX)
+│ └── src/
+│ ├── Shared/ # Shared Kernel : Value Objects génériques
+│ │ # réutilisables entre Bounded Contexts
+│ │ # (Uuid, Email...). Ne contient jamais de
+│ │ # concept métier propre à un seul contexte.
+│ └── IdentityAccess/ # Bounded Context : comptes, auth, RBAC
+│ ├── Domain/ # Métier pur, zéro dépendance framework
+│ ├── Application/ # Commands/Queries, orchestration
+│ └── Infrastructure/ # Doctrine, HTTP, API Platform
 ├── frontend/ # Next.js 16 (portail public + espace candidat)
 ├── docker/ # Dockerfiles (php, nextjs) + config nginx
 ├── docs/adr/ # Architecture Decision Records
 ├── compose.yaml
 └── HireFlow-Cahier-des-Charges.md
 ```
+
+### Convention : Shared Kernel
+
+Un Value Object va dans `src/Shared/Domain/` seulement s'il est **techniquement générique**
+(pas de règle métier propre à un seul contexte) : `Uuid`, `Email`, plus tard `Money`, `Address`...
+
+Les **identités d'agrégat** (`UserId`, futur `CompanyId`, `JobPostingId`...) restent **locales**
+à leur Bounded Context, même si elles composent en interne le `Uuid` partagé — un autre contexte
+ne doit jamais importer directement le type d'identité d'un autre contexte (ça créerait un
+couplage contraire au principe des Bounded Contexts, cahier des charges §3.1.3).
 
 ---
 
@@ -85,9 +104,14 @@ hireflow/
 
 ### Sprint 1 — Module Identity & Access 🚧 (en cours)
 
-- [ ] Structure du module (`Domain` / `Application` / `Infrastructure`)
-- [ ] Entité `User` (Doctrine)
-- [ ] Inscription + hash Argon2id
+- [x] Structure du module (`Domain` / `Application` / `Infrastructure`)
+- [x] Shared Kernel (`Uuid`, `Email`) + identité locale `UserId`
+- [x] Entité de domaine `User` (agrégat pur, factories `register()` / `reconstitute()`)
+- [ ] Mapping Doctrine XML + Custom Type `UserIdType`
+- [ ] Migration + première table `identity_access_user`
+- [ ] Repository (`UserRepositoryInterface` + implémentation Doctrine)
+- [ ] Inscription + hash Argon2id (Application layer)
+- [ ] Exposition API Platform (Resource + Processor, séparés de l'entité)
 - [ ] JWT RS256 (access token + refresh token rotatif)
 - [ ] RBAC hiérarchique (`ROLE_CANDIDATE`, `ROLE_RECRUITER`, `ROLE_COMPANY_ADMIN`, `ROLE_PLATFORM_ADMIN`)
 - [ ] MFA/TOTP
