@@ -14,6 +14,7 @@
         <field name="status" type="string" column="status" length="30" enum-type="App\IdentityAccess\Domain\Model\UserStatus"/>
         <field name="createdAt" type="datetime_immutable" column="created_at"/>
         <field name="emailVerifiedAt" type="datetime_immutable" column="email_verified_at" nullable="true"/>
+        <field name="roles" type="json" column="roles"/>
 
     </entity>
 </doctrine-mapping>

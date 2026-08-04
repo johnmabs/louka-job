@@ -18,6 +18,8 @@ final class User
 {
     private UserId $id;
     private Email $email;
+    /** @var list<string> */
+    private array $roles;
     private string $passwordHash;
     private UserStatus $status;
     private \DateTimeImmutable $createdAt;
@@ -26,6 +28,7 @@ final class User
     private function __construct(
         UserId $id,
         Email $email,
+        array $roles,
         string $passwordHash,
         UserStatus $status,
         \DateTimeImmutable $createdAt,
@@ -35,6 +38,7 @@ final class User
         $this->email = $email;
         $this->passwordHash = $passwordHash;
         $this->status = $status;
+        $this->roles = $roles;
         $this->createdAt = $createdAt;
         $this->emailVerifiedAt = $emailVerifiedAt;
     }
@@ -43,11 +47,12 @@ final class User
      * Factory nommée : seul point d'entrée pour créer un nouveau compte.
      * Le constructeur privé empêche de contourner cette règle.
      */
-    public static function register(Email $email, string $passwordHash): self
+    public static function register(Email $email, string $passwordHash, array $roles): self
     {
         return new self(
             id: UserId::generate(),
             email: $email,
+            roles: ['ROLE_CANDIDATE'],
             passwordHash: $passwordHash,
             status: UserStatus::PendingVerification,
             createdAt: new \DateTimeImmutable(),
@@ -61,12 +66,13 @@ final class User
     public static function reconstitute(
         UserId $id,
         Email $email,
+        array $roles,
         string $passwordHash,
         UserStatus $status,
         \DateTimeImmutable $createdAt,
         ?\DateTimeImmutable $emailVerifiedAt,
     ): self {
-        return new self($id, $email, $passwordHash, $status, $createdAt, $emailVerifiedAt);
+        return new self($id, $email, $roles, $passwordHash, $status, $createdAt, $emailVerifiedAt);
     }
 
     /**
@@ -92,6 +98,14 @@ final class User
     public function email(): Email
     {
         return $this->email;
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function roles(): array
+    {
+        return $this->roles;
     }
 
     public function passwordHash(): string
