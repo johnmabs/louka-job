@@ -102,19 +102,18 @@ couplage contraire au principe des Bounded Contexts, cahier des charges §3.1.3)
 - Next.js 16 + Tailwind bootstrapé dans `frontend/`, routing Traefik → Next.js validé.
 - ADR 0001, 0002, 0003 rédigés (versions Next.js/Node, Valkey, versions infra).
 
-### Sprint 1 — Module Identity & Access 🚧 (en cours)
+### Sprint 1 — Module Identity & Access ✅ (terminé)
 
 - [x] Structure du module (`Domain` / `Application` / `Infrastructure`)
 - [x] Shared Kernel (`Uuid`, `Email`) + identité locale `UserId`
-- [x] Entité de domaine `User` (agrégat pur, factories `register()` / `reconstitute()`)
+- [x] Entité de domaine `User` (agrégat pur, `roles` minimal `ROLE_CANDIDATE`)
 - [x] Mapping Doctrine XML + Custom Types (`UserIdType`, `EmailType`)
-- [x] Migration + table `identity_access_user`
-- [x] Repository (`UserRepositoryInterface` + implémentation Doctrine)
-- [x] Inscription + hash Argon2id (Application + API Platform)
-- [x] Vérification d'email (token HMAC signé, 24h, usage unique)
-- [x] Envoi réel de l'email de vérification (Mailer/Notifier → Mailpit)
-- [ ] Connexion + JWT RS256 (access token + refresh token rotatif)
-- [ ] RBAC hiérarchique (`ROLE_CANDIDATE`, `ROLE_RECRUITER`, `ROLE_COMPANY_ADMIN`, `ROLE_PLATFORM_ADMIN`)
+- [x] Repository (Port/Adapter Doctrine)
+- [x] Inscription + hash Argon2id
+- [x] Vérification d'email (token HMAC, 24h, usage unique) + envoi réel (Mailer → Mailpit)
+- [x] Connexion + JWT RS256 (POST /api/v1/auth/login)
+- [x] Refresh token rotatif dans Valkey (POST /api/v1/auth/refresh) — rotation + détection de rejeu par chaîne
+- [ ] RBAC hiérarchique complet (`access_control`, voters, `role_hierarchy`)
 - [ ] MFA/TOTP
 
 ---
