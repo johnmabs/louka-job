@@ -14,3 +14,5 @@ api_platform:
         App\IdentityAccess\Domain\Exception\EmailAlreadyVerifiedException: 409
         App\IdentityAccess\Domain\Exception\InvalidRefreshTokenException: 401
         App\IdentityAccess\Domain\Exception\RefreshTokenReuseDetectedException: 401
+        App\IdentityAccess\Domain\Exception\InvalidCredentialsException: 401
+        App\IdentityAccess\Domain\Exception\AccountNotActiveException: 403

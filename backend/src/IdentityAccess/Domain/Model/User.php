@@ -47,7 +47,7 @@ final class User
      * Factory nommée : seul point d'entrée pour créer un nouveau compte.
      * Le constructeur privé empêche de contourner cette règle.
      */
-    public static function register(Email $email, string $passwordHash, array $roles): self
+    public static function register(Email $email, string $passwordHash): self
     {
         return new self(
             id: UserId::generate(),

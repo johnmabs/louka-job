@@ -37,3 +37,11 @@ services:
         arguments:
             $dsn: "%env(REDIS_DSN)%"
     App\IdentityAccess\Domain\Security\RefreshTokenStoreInterface: '@App\IdentityAccess\Infrastructure\Security\ValkeyRefreshTokenStore'
+    App\IdentityAccess\Infrastructure\Security\JwtPayloadEnricher:
+        tags:
+            - {
+                  name: kernel.event_listener,
+                  event: lexik_jwt_authentication.on_jwt_created,
+              }
+
+    App\IdentityAccess\Domain\Security\AccessTokenIssuerInterface: '@App\IdentityAccess\Infrastructure\Security\LexikAccessTokenIssuer'
