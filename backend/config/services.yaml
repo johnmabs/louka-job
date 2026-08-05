@@ -30,3 +30,10 @@ services:
         arguments:
             $frontendUrl: "%env(FRONTEND_URL)%"
             $senderAddress: "%env(MAILER_SENDER_ADDRESS)%"
+    Redis:
+        class: Redis
+        factory:
+            ['App\Shared\Infrastructure\Redis\RedisClientFactory', "create"]
+        arguments:
+            $dsn: "%env(REDIS_DSN)%"
+    App\IdentityAccess\Domain\Security\RefreshTokenStoreInterface: '@App\IdentityAccess\Infrastructure\Security\ValkeyRefreshTokenStore'

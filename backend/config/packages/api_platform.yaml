@@ -12,3 +12,5 @@ api_platform:
         App\IdentityAccess\Domain\Exception\InvalidVerificationTokenException: 400
         App\IdentityAccess\Domain\Exception\UserNotFoundException: 404
         App\IdentityAccess\Domain\Exception\EmailAlreadyVerifiedException: 409
+        App\IdentityAccess\Domain\Exception\InvalidRefreshTokenException: 401
+        App\IdentityAccess\Domain\Exception\RefreshTokenReuseDetectedException: 401
