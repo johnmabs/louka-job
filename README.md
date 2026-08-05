@@ -113,7 +113,7 @@ couplage contraire au principe des Bounded Contexts, cahier des charges §3.1.3)
 - [x] Vérification d'email (token HMAC, 24h, usage unique) + envoi réel (Mailer → Mailpit)
 - [x] Connexion + JWT RS256 (POST /api/v1/auth/login)
 - [x] Refresh token rotatif dans Valkey (POST /api/v1/auth/refresh) — rotation + détection de rejeu par chaîne
-- [ ] RBAC hiérarchique complet (`access_control`, voters, `role_hierarchy`)
+- [x] RBAC hiérarchique (firewall JWT, UserProvider, role_hierarchy, access_control)
 - [ ] MFA/TOTP
 
 ---
