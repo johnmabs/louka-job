@@ -102,7 +102,7 @@ couplage contraire au principe des Bounded Contexts, cahier des charges §3.1.3)
 - Next.js 16 + Tailwind bootstrapé dans `frontend/`, routing Traefik → Next.js validé.
 - ADR 0001, 0002, 0003 rédigés (versions Next.js/Node, Valkey, versions infra).
 
-### Sprint 1 — Module Identity & Access ✅ (terminé)
+### Sprint 1 — Module Identity & Access ✅ (essentiel terminé, MFA reporté)
 
 - [x] Structure du module (`Domain` / `Application` / `Infrastructure`)
 - [x] Shared Kernel (`Uuid`, `Email`) + identité locale `UserId`
@@ -113,8 +113,8 @@ couplage contraire au principe des Bounded Contexts, cahier des charges §3.1.3)
 - [x] Vérification d'email (token HMAC, 24h, usage unique) + envoi réel (Mailer → Mailpit)
 - [x] Connexion + JWT RS256 (POST /api/v1/auth/login)
 - [x] Refresh token rotatif dans Valkey (POST /api/v1/auth/refresh) — rotation + détection de rejeu par chaîne
-- [x] RBAC hiérarchique (firewall JWT, UserProvider, role_hierarchy, access_control)
-- [ ] MFA/TOTP
+- [x] Inscription, vérification d'email, connexion JWT, refresh token rotatif, RBAC
+- [ ] MFA/TOTP — reporté, à reprendre plus tard
 
 ---
 
