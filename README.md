@@ -116,6 +116,16 @@ couplage contraire au principe des Bounded Contexts, cahier des charges §3.1.3)
 - [x] Inscription, vérification d'email, connexion JWT, refresh token rotatif, RBAC
 - [ ] MFA/TOTP — reporté, à reprendre plus tard
 
+### Sprint 2 — Module Company 🚧 (en cours)
+
+- [x] Agrégat Domain Company + CompanyMember (RBAC organisation owner/admin/recruiter/viewer)
+- [x] Slug (Shared Kernel), mapping Doctrine (OneToMany cascade + custom types), migration
+- [x] Création d'entreprise (POST /api/v1/companies) — créateur devient owner automatiquement
+- [ ] Invitation de collaborateurs (POST /api/v1/companies/{id}/members)
+- [ ] Retrait / changement de rôle d'un membre
+- [ ] Vérification SIRET (asynchrone)
+- [ ] Voter Symfony pour les permissions au niveau entreprise
+
 ---
 
 _Ce README est mis à jour à chaque fin de sprint — voir aussi les ADR pour le détail des décisions
