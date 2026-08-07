@@ -15,6 +15,8 @@ use App\Company\Domain\ValueObject\Branding;
 use App\Company\Domain\ValueObject\CompanyId;
 use App\Company\Domain\ValueObject\UserId;
 use App\Shared\Domain\ValueObject\Slug;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Racine d'agrégat du Bounded Context Company. CompanyMember vit à
@@ -31,8 +33,7 @@ final class Company
     private VerificationStatus $verificationStatus;
     private \DateTimeImmutable $createdAt;
 
-    /** @var list<CompanyMember> */
-    private array $members;
+    private Collection $members;
 
     private function __construct(
         CompanyId $id,
@@ -42,7 +43,7 @@ final class Company
         Branding $branding,
         VerificationStatus $verificationStatus,
         \DateTimeImmutable $createdAt,
-        array $members,
+        iterable $members = [],
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -51,7 +52,7 @@ final class Company
         $this->branding = $branding;
         $this->verificationStatus = $verificationStatus;
         $this->createdAt = $createdAt;
-        $this->members = $members;
+        $this->members = new ArrayCollection(is_array($members) ? $members : iterator_to_array($members));
     }
 
     /**
@@ -70,14 +71,13 @@ final class Company
             members: [],
         );
 
-        $company->members[] = new CompanyMember($ownerUserId, CompanyRole::Owner, new \DateTimeImmutable());
+        $owner = new CompanyMember($ownerUserId, CompanyRole::Owner, new \DateTimeImmutable());
+        $owner->assignCompany($company);
+        $company->members->add($owner);
 
         return $company;
     }
 
-    /**
-     * @param list<CompanyMember> $members
-     */
     public static function reconstitute(
         CompanyId $id,
         string $name,
@@ -86,7 +86,7 @@ final class Company
         Branding $branding,
         VerificationStatus $verificationStatus,
         \DateTimeImmutable $createdAt,
-        array $members,
+        iterable $members,
     ): self {
         return new self($id, $name, $slug, $siret, $branding, $verificationStatus, $createdAt, $members);
     }
@@ -102,7 +102,9 @@ final class Company
 
         $this->requirePermission($invitedBy, fn(CompanyRole $r) => $r->canManageMembers());
 
-        $this->members[] = new CompanyMember($newMemberId, $role, new \DateTimeImmutable());
+        $member = new CompanyMember($newMemberId, $role, new \DateTimeImmutable());
+        $member->assignCompany($this);
+        $this->members->add($member);
     }
 
     public function removeMember(UserId $memberId, UserId $removedBy): void
@@ -119,10 +121,7 @@ final class Company
             throw new LastOwnerException('Impossible de retirer le dernier owner de l\'entreprise.');
         }
 
-        $this->members = array_values(array_filter(
-            $this->members,
-            static fn(CompanyMember $m): bool => !$m->userId()->equals($memberId),
-        ));
+        $this->members->removeElement($member);
     }
 
     public function changeMemberRole(UserId $memberId, CompanyRole $newRole, UserId $changedBy): void
@@ -192,7 +191,7 @@ final class Company
      */
     public function members(): array
     {
-        return $this->members;
+        return $this->members->getValues();
     }
 
     private function hasMember(UserId $userId): bool
@@ -214,7 +213,7 @@ final class Company
     private function countOwners(): int
     {
         return count(array_filter(
-            $this->members,
+            $this->members->toArray(),
             static fn(CompanyMember $m): bool => CompanyRole::Owner === $m->role(),
         ));
     }

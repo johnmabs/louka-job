@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                   https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Company\Domain\Model\Company" table="company">
+
+        <id name="id" type="company_id" column="id">
+            <generator strategy="NONE"/>
+        </id>
+
+        <field name="name" type="string" column="name" length="255"/>
+        <field name="slug" type="slug" column="slug" unique="true" length="255"/>
+        <field name="siret" type="string" column="siret" length="14" nullable="true"/>
+        <field name="verificationStatus" type="string" column="verification_status" length="20" enum-type="App\Company\Domain\Model\VerificationStatus"/>
+        <field name="createdAt" type="datetime_immutable" column="created_at"/>
+
+        <field name="branding" type="company_branding" column="branding"/>
+
+        <one-to-many field="members" target-entity="App\Company\Domain\Model\CompanyMember" mapped-by="company" orphan-removal="true">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+
+    </entity>
+</doctrine-mapping>

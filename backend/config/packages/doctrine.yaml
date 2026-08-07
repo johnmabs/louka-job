@@ -4,6 +4,10 @@ doctrine:
         types:
             user_id: App\IdentityAccess\Infrastructure\Doctrine\Type\UserIdType
             email: App\Shared\Infrastructure\Doctrine\Type\EmailType
+            slug: App\Shared\Infrastructure\Doctrine\Type\SlugType
+            company_id: App\Company\Infrastructure\Doctrine\Type\CompanyIdType
+            company_user_id: App\Company\Infrastructure\Doctrine\Type\CompanyUserIdType
+            company_branding: App\Company\Infrastructure\Doctrine\Type\BrandingType
 
         profiling_collect_backtrace: "%kernel.debug%"
     orm:
@@ -19,6 +23,12 @@ doctrine:
                 dir: "%kernel.project_dir%/src/IdentityAccess/Infrastructure/Doctrine/mapping"
                 prefix: 'App\IdentityAccess\Domain\Model'
                 alias: IdentityAccess
+            Company:
+                type: xml
+                is_bundle: false
+                dir: "%kernel.project_dir%/src/Company/Infrastructure/Doctrine/mapping"
+                prefix: 'App\Company\Domain\Model'
+                alias: Company
 
 when@test:
     doctrine:
