@@ -16,3 +16,4 @@ api_platform:
         App\IdentityAccess\Domain\Exception\RefreshTokenReuseDetectedException: 401
         App\IdentityAccess\Domain\Exception\InvalidCredentialsException: 401
         App\IdentityAccess\Domain\Exception\AccountNotActiveException: 403
+        App\Company\Domain\Exception\SlugAlreadyUsedException: 409
