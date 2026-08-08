@@ -8,6 +8,7 @@ doctrine:
             company_id: App\Company\Infrastructure\Doctrine\Type\CompanyIdType
             company_user_id: App\Company\Infrastructure\Doctrine\Type\CompanyUserIdType
             company_branding: App\Company\Infrastructure\Doctrine\Type\BrandingType
+            company_member_id: App\Company\Infrastructure\Doctrine\Type\CompanyMemberIdType
 
         profiling_collect_backtrace: "%kernel.debug%"
     orm:

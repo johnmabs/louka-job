@@ -6,8 +6,8 @@ namespace App\Company\Domain\Model;
 
 use App\Company\Domain\Model\Company;
 use App\Company\Domain\Model\CompanyRole;
+use App\Company\Domain\ValueObject\CompanyMemberId;
 use App\Company\Domain\ValueObject\UserId;
-use App\Shared\Domain\ValueObject\Uuid;
 
 /**
  * Entité enfant de l'agrégat Company — n'existe jamais indépendamment
@@ -15,7 +15,7 @@ use App\Shared\Domain\ValueObject\Uuid;
  */
 final class CompanyMember
 {
-    private Uuid $id;
+    private CompanyMemberId $id;
 
     /**
      * Référence inverse vers Company, utilisée uniquement par Doctrine pour
@@ -29,7 +29,7 @@ final class CompanyMember
         private CompanyRole $role,
         private readonly \DateTimeImmutable $joinedAt,
     ) {
-        $this->id = Uuid::generate();
+        $this->id = CompanyMemberId::generate();
     }
 
     /**

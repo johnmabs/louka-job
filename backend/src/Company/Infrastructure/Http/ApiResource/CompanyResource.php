@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
 use App\Company\Infrastructure\Http\Processor\CreateCompanyProcessor;
+use App\Company\Infrastructure\Http\Processor\CreateRecruiterProcessor;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
@@ -16,6 +17,14 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Post(
             uriTemplate: '/companies',
             processor: CreateCompanyProcessor::class,
+        ),
+        new Post(
+            uriTemplate: '/companies/{id}/recruiters',
+            uriVariables: ['id'],
+            status: 201,
+            input: CreateRecruiterInput::class,
+            output: RecruiterCreatedResource::class,
+            processor: CreateRecruiterProcessor::class,
         ),
     ],
 )]

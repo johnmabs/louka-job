@@ -5,7 +5,7 @@
 
     <entity name="App\Company\Domain\Model\CompanyMember" table="company_member">
 
-        <id name="id" type="guid" column="id">
+        <id name="id" type="company_member_id" column="id">
             <generator strategy="NONE"/>
         </id>
 

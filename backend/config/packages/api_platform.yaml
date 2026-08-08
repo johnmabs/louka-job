@@ -17,3 +17,6 @@ api_platform:
         App\IdentityAccess\Domain\Exception\InvalidCredentialsException: 401
         App\IdentityAccess\Domain\Exception\AccountNotActiveException: 403
         App\Company\Domain\Exception\SlugAlreadyUsedException: 409
+        App\Company\Domain\Exception\CompanyNotFoundException: 404
+        App\Company\Domain\Exception\InsufficientCompanyPermissionException: 403
+        App\Company\Domain\Exception\MemberAlreadyExistsException: 409

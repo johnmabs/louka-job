@@ -52,11 +52,29 @@ final class User
         return new self(
             id: UserId::generate(),
             email: $email,
-            roles: ['ROLE_CANDIDATE'],
             passwordHash: $passwordHash,
             status: UserStatus::PendingVerification,
             createdAt: new \DateTimeImmutable(),
             emailVerifiedAt: null,
+            roles: ['ROLE_CANDIDATE'],
+        );
+    }
+
+    /**
+     * cahier des charges §22 (ligne 1441) : un recruteur ne s'inscrit jamais
+     * lui-même, il est créé par le owner/admin d'une Company (module Company,
+     * cf. CreateRecruiterHandler). Vérification d'email toujours requise.
+     */
+    public static function registerAsRecruiter(Email $email, string $passwordHash): self
+    {
+        return new self(
+            id: UserId::generate(),
+            email: $email,
+            passwordHash: $passwordHash,
+            status: UserStatus::PendingVerification,
+            createdAt: new \DateTimeImmutable(),
+            emailVerifiedAt: null,
+            roles: ['ROLE_RECRUITER'],
         );
     }
 

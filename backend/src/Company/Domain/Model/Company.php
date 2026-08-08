@@ -146,6 +146,19 @@ final class Company
         $this->verificationStatus = VerificationStatus::Verified;
     }
 
+    /**
+     * Pré-vérification publique, utilisée par les orchestrations Application
+     * qui doivent valider la permission AVANT d'effectuer une action coûteuse
+     * ou irréversible ailleurs (ex. créer un compte IdentityAccess) — évite
+     * de créer un compte "orphelin" si l'acteur n'a finalement pas le droit.
+     *
+     * @throws InsufficientCompanyPermissionException
+     */
+    public function ensureCanManageMembers(UserId $actorId): void
+    {
+        $this->requirePermission($actorId, fn(CompanyRole $r) => $r->canManageMembers());
+    }
+
     public function markRejected(): void
     {
         $this->verificationStatus = VerificationStatus::Rejected;
