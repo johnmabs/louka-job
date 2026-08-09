@@ -129,5 +129,17 @@ couplage contraire au principe des Bounded Contexts, cahier des charges §3.1.3)
 
 ---
 
+## Conventions de code
+
+### Emplacement des enums dans un module Domain
+
+- `Domain/Model/` : enums représentant l'état propre d'une entité/agrégat (ex. `UserStatus`
+  pour `User`, `VerificationStatus` pour `Company`, `CompanyRole` pour `CompanyMember`).
+- `Domain/ValueObject/` : enums qui sont un composant interne d'un Value Object, sans exister
+  de façon autonome (ex. `AvailabilityStatus` n'a de sens que comme discriminant d'`Availability`,
+  `RemotePreference` que comme champ de `Location`).
+
+---
+
 _Ce README est mis à jour à chaque fin de sprint — voir aussi les ADR pour le détail des décisions
 qui s'écartent du cahier des charges initial._
