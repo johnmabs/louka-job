@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                   https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\CandidateProfile\Domain\Model\CandidateProfile" table="candidate_profile">
+
+        <id name="id" type="candidate_profile_id" column="id">
+            <generator strategy="NONE"/>
+        </id>
+
+        <field name="userId" type="candidate_user_id" column="user_id" unique="true"/>
+        <field name="headline" type="string" column="headline" length="255" nullable="true"/>
+        <field name="summary" type="text" column="summary" nullable="true"/>
+        <field name="location" type="candidate_location" column="location" nullable="true"/>
+        <field name="availability" type="candidate_availability" column="availability" nullable="true"/>
+        <field name="visibility" type="string" column="visibility" length="30" enum-type="App\CandidateProfile\Domain\Model\ProfileVisibility"/>
+        <field name="createdAt" type="datetime_immutable" column="created_at"/>
+        <field name="updatedAt" type="datetime_immutable" column="updated_at"/>
+
+    </entity>
+</doctrine-mapping>

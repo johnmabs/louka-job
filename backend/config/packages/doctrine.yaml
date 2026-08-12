@@ -9,6 +9,10 @@ doctrine:
             company_user_id: App\Company\Infrastructure\Doctrine\Type\CompanyUserIdType
             company_branding: App\Company\Infrastructure\Doctrine\Type\BrandingType
             company_member_id: App\Company\Infrastructure\Doctrine\Type\CompanyMemberIdType
+            candidate_profile_id: App\CandidateProfile\Infrastructure\Doctrine\Type\CandidateProfileIdType
+            candidate_user_id: App\CandidateProfile\Infrastructure\Doctrine\Type\CandidateUserIdType
+            candidate_location: App\CandidateProfile\Infrastructure\Doctrine\Type\LocationType
+            candidate_availability: App\CandidateProfile\Infrastructure\Doctrine\Type\AvailabilityType
 
         profiling_collect_backtrace: "%kernel.debug%"
     orm:
@@ -30,6 +34,12 @@ doctrine:
                 dir: "%kernel.project_dir%/src/Company/Infrastructure/Doctrine/mapping"
                 prefix: 'App\Company\Domain\Model'
                 alias: Company
+            CandidateProfile:
+                type: xml
+                is_bundle: false
+                dir: "%kernel.project_dir%/src/CandidateProfile/Infrastructure/Doctrine/mapping"
+                prefix: 'App\CandidateProfile\Domain\Model'
+                alias: CandidateProfile
 
 when@test:
     doctrine:
