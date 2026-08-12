@@ -46,3 +46,4 @@ services:
 
     App\IdentityAccess\Domain\Security\AccessTokenIssuerInterface: '@App\IdentityAccess\Infrastructure\Security\LexikAccessTokenIssuer'
     App\Company\Domain\Repository\CompanyRepositoryInterface: '@App\Company\Infrastructure\Doctrine\DoctrineCompanyRepository'
+    App\CandidateProfile\Domain\Repository\CandidateProfileRepositoryInterface: '@App\CandidateProfile\Infrastructure\Doctrine\DoctrineCandidateProfileRepository'
